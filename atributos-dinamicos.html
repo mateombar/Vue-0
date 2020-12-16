@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <input v-model="width" type="range" />Width
+      <br />
+      <input v-model="height" type="range" />height
+      <br />
+      <img v-bind:src="this.completedUrl" alt="" />
+      <br />
+      {{completedUrl}}
+      <br />
+      <input type="text" v-model="link" />
+      <a v-bind:href="link">{{link}}</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          link: "https://vuejs.org/",
+          baseUrl: "http://placekitten.com/",
+          width: "50",
+          height: "50",
+        },
+        computed: {
+          completedUrl() {
+            return `${this.baseUrl}${this.width * 3}/${this.height * 3}`;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
