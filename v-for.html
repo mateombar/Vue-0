@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <input type="range" v-model="timer" />
+      <br />
+      <input type="text" v-model="findName" />{{findName}}
+      <br />
+      <p v-for="(value,key) in user">{{key}}: {{value}}</p>
+      <hr />
+      <li v-for="(task, index) in timeFilter">
+        {{ task.name}} - {{task.time}}
+      </li>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          timer: 0,
+          findName: "",
+          user: {
+            name: "Math",
+            password: "12345",
+          },
+          tasks: [
+            { name: "Comer", time: 10 },
+            { name: "Dormir", time: 80 },
+            { name: "Estudiar", time: 100 },
+            { name: "Ejercicio", time: 20 },
+            { name: "Perro", time: 30 },
+          ],
+        },
+        computed: {
+          timeFilter() {
+            return this.tasks.filter((task) => {
+              return (
+                task.time <= this.timer &&
+                task.name.toLowerCase().includes(this.findName.toLowerCase())
+              );
+            });
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
