@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+        <ul>
+            <li v-for="user in users">{{user.name}}</li>
+        </ul>
+      <pre>{{$data}}</pre>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: "#app",
+        // Lo que ponga aca se ejecutara cada vez que cree la instancia
+        created() {
+          const url = "https://jsonplaceholder.typicode.com/users";
+          fetch(url)
+            .then((response) => response.json())
+            .then((response) => (this.users = response));
+        },
+        data: {
+          users: [],
+        },
+      });
+    </script>
+  </body>
+</html>
