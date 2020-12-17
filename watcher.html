@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h3>Cambia Tu constrasena</h3>
+      <input type="text" v-model="password" />
+      <br />
+      <p>{{state}}</p>
+      <pre>{{$data}}</pre>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          password: null,
+          state: "Enter new Password",
+          inValid: ["admin", "12345", "password"],
+        },
+        watch: {
+          password(newValue, oldValue) {
+            if (this.inValid.indexOf(newValue.toLowerCase()) > -1) {
+              this.state = "Invalid password";
+              return false;
+            }
+            if (newValue.length < 5) {
+              this.state = "Very few characters";
+              return false;
+            }
+            this.state = "Correct password";
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
