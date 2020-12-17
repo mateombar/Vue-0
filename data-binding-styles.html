@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .user-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        margin: 2rem;
+        font-size: 2rem;
+        border-radius: 10px;
+      }
+      .logged-in {
+        border: 1px rgb(0, 85, 196) solid;
+        background-color: lightskyblue;
+      }
+      .logged-out {
+        border: 1px rgb(243, 194, 34) solid;
+        background-color: tomato;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <input type="checkbox" v-model="logged" /><span>Login / Logout</span>
+      <article class="user-info" :class="logedStyle">{{logedMessage}}</article>
+      <pre>{{$data}}</pre>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          logged: true,
+          messages: {
+            in: "You are logged",
+            out: "You are not logged",
+          },
+        },
+        computed: {
+          logedMessage() {
+            return this.logged ? this.messages.in : this.messages.out;
+          },
+          logedStyle() {
+            // return {
+            //   "logged-in": this.logged,
+            //   "logged-out": !this.logged,
+            // };
+            // return this.logged ? "logged-in" : "logged-out";
+            return `logged-${this.logged ? "in" : "out"}`;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
