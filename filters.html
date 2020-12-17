@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <li v-for="user in fullName">{{user | capitalize | short(35)}}</li>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            created(){
+                fetch(this.url)
+                    .then(response => response.json())
+                    .then(response => this.users = response.results.map(user => user.name));
+            },
+            data: {
+                url: 'https://randomuser.me/api/?results=50',
+                users: [],
+            },
+            computed: {
+                fullName(){
+                    return this.users.map(user => `${user.title} - Name: ${user.first} - Lastname: ${user.last}`)
+                }
+            },
+            filters:{
+                capitalize(value){
+                    if (!value) return ''
+                    return value.toUpperCase()
+                },
+                short(value, amount){
+                    return `${value.substring(0, amount)} ... `;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
