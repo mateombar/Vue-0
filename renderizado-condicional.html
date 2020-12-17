@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <form @submit.prevent="sendForm">
+        <input type="text" placeholder="Introduce Name" v-model="name" />
+        <br />
+        <input
+          type="text"
+          placeholder="Introduce password"
+          v-model="password"
+        />
+        <br />
+        <input
+          type="text"
+          placeholder="Introduce direction"
+          v-model="direction"
+        />
+        <br />
+        <select id="direction" v-model="chosenDirection">
+          <option value="same">Same direction</option>
+          <option value="new">New direction</option>
+        </select>
+        <br />
+        <input
+          type="text"
+          :placeholder="directionText"
+          :disabled="chosenDirection == 'same'"
+          v-model="newDirection"
+        />
+        <br />
+        <input type="checkbox" id="checkbox" v-model="checkPolitics" />Did you
+        acept terms and conditions?
+        <br />
+        <input v-if="checkPolitics" value="Send" type="submit" />
+      </form>
+      <pre>{{response}}</pre>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          response: null,
+          name: null,
+          password: null,
+          direction: null,
+          chosenDirection: null,
+          newDirection: null,
+          checkPolitics: false,
+        },
+        methods: {
+          sendForm() {
+            this.response = "You did it";
+          },
+        },
+        computed: {
+          directionText() {
+            if (this.chosenDirection == "same") {
+              this.newDirection = this.direction;
+              return this.direction;
+            }
+            this.newDirection = "";
+            return "Enter new direction";
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
