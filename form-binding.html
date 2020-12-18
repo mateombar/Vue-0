@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .invalid {
+        border: 1px red solid;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <form @submit.prevent="save">
+        <input
+          type="text"
+          v-model="form.name"
+          placeholder="Name"
+          :class="{invalid: !form.name}"
+        />
+        <br />
+        <textarea
+          v-model="form.message"
+          placeholder="add multiple lines"
+        ></textarea>
+        <br />
+        <h2>Check Box1</h2>
+        <input type="checkbox" v-model="form.acept" />Acept
+        <br />
+        <h2>Check Box2</h2>
+        <input
+          type="checkbox"
+          id="jack"
+          value="Jack"
+          v-model="form.checkedNames"
+        />
+        <label for="jack">Jack</label>
+        <input
+          type="checkbox"
+          id="john"
+          value="John"
+          v-model="form.checkedNames"
+        />
+        <label for="john">John</label>
+        <input
+          type="checkbox"
+          id="mike"
+          value="Mike"
+          v-model="form.checkedNames"
+        />
+        <label for="mike">Mike</label>
+        <br />
+
+        <h3>Radio</h3>
+        <input type="radio" id="one" value="One" v-model="form.picked" />
+        <label for="one">One</label>
+        <br />
+        <input type="radio" id="two" value="Two" v-model="form.picked" />
+        <label for="two">Two</label>
+        <br />
+        <h3>Select 1</h3>
+        <select v-model="form.selected">
+          <option disabled value="">Please select one</option>
+          <option value="a">A option</option>
+          <option value="b">B option</option>
+          <option value="c">C option</option>
+        </select>
+        <br />
+        <h1>Select with for</h1>
+        <select v-model="form.selected2">
+          <option v-for="option in form.options" v-bind:value="option.value">
+            {{ option.text }}
+          </option>
+        </select>
+        <span>Selected: {{ form.selected2 }}</span>
+      </form>
+      <pre>{{$data}}</pre>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: "#app",
+        mounted() {
+          if (window.localStorage.getItem("form")) {
+            this.form = JSON.parse(window.localStorage.getItem("form"));
+          }
+        },
+        data: {
+          form: {
+            name: null,
+            message: null,
+            acept: false,
+            checkedNames: [],
+            picked: null,
+            selected: null,
+            selected2: "A",
+            options: [
+              { text: "One", value: "A" },
+              { text: "Two", value: "B" },
+              { text: "Three", value: "C" },
+            ],
+          },
+        },
+        methods: {
+          save() {},
+        },
+      });
+      vm.$watch(
+        "form",
+        (newV, oldV) => {
+          window.localStorage.setItem("form", JSON.stringify(newV));
+        },
+        { deep: true }
+      );
+    </script>
+  </body>
+</html>
